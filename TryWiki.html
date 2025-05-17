@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="wiki copy.css">
+    <link rel="icon" href="https://i.imgur.com/mHVgkNo.jpeg"> <!--ADD ICON FOR WEBSITE TAB-->
+    <title>UE GUARDIANS WIKI</title>
+
+
+    
+
+</head>
+<body>
+    
+    <nav>
+    <div class="logo">
+        <a href="TryWiki.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"> </a>
+    </div>
+    <div class="search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search game content...">
+    </div>
+    <div class="buttons">
+      <a href="#Download"><button>Download</button></a>
+    </div>
+  </nav>
+
+  <div class="sub-nav">
+    <div class="item">Game
+      <div class="dropdown">
+        <a href="Units.html">Units</a>
+        <a href="enemies.html">Enemies</a>
+      </div>
+    </div>
+    <div class="item">
+        <a href="community.html">Community</a>
+    </div>
+    <div class="item">About
+      <div class="dropdown">
+        <a href="team.html">Team</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- <section class="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="control">
+      <button id="prev">❮</button>
+      <button id="next">❯</button>
+    </div>
+    <div class="indicator" id="indicators"></div>
+  </section> -->
+
+
+  <section class="container">
+    <div class="slider-wrapper">
+        <div class="slider" id="slider">
+            <img src="https://i.imgur.com/mHVgkNo.jpeg" alt="" id="slide1"/>
+            <img src="https://i.imgur.com/mHVgkNo.jpeg" alt="" id="slide2"/>
+            <img src="https://i.imgur.com/mHVgkNo.jpeg" alt="" id="slide3"/>
+        </div>
+        <div class="slider-nav">
+            <a href="#slide1" class="dot"></a>
+            <a href="#slide2" class="dot"></a>
+            <a href="#slide3" class="dot"></a>
+        </div>
+    </div>
+  </section>
+
+
+
+  <footer>
+    <div class="social">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-discord"></i>
+    </div>
+    <p>2025 UE Guardians</p>
+  </footer>
+
+  <script>
+  const slider = document.querySelector('.slider');
+  const dots = document.querySelectorAll('.slider-nav a');
+  const totalSlides = dots.length;
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      slider.scrollTo({
+        left: index * slider.clientWidth,
+        behavior: 'smooth'
+      });
+
+      dots.forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+    });
+  });
+
+  // Optional: sync active dot when sliding programmatically
+  slider.addEventListener('scroll', () => {
+    let index = Math.round(slider.scrollLeft / slider.clientWidth);
+    dots.forEach(d => d.classList.remove('active'));
+    if (dots[index]) dots[index].classList.add('active');
+  });
+</script>
+
+    <!-- <script>
+    const imgs = [
+      'https://i.imgur.com/mHVgkNo.jpeg',
+      'https://c.tenor.com/ZY22k9pNBsAAAAAd/tenor.gif',
+      'https://media.tenor.com/QkUht0qnlHgAAAAj/genshin-impact-ajaw.gif'
+    ];
+    let idx = 0;
+    const bg = document.getElementById('hero-bg');
+    const dots = document.getElementById('indicators');
+
+    function renderDots() {
+      dots.innerHTML = '';
+      imgs.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = i === idx ? 'active' : '';
+        dot.addEventListener('click', () => { idx = i; update(); });
+        dots.appendChild(dot);
+      });
+    }
+
+    function update() {
+      bg.style.backgroundImage = `url('${imgs[idx]}')`;
+      renderDots();
+    }
+
+    document.getElementById('prev').onclick = () => { idx = (idx - 1 + imgs.length) % imgs.length; update(); };
+    document.getElementById('next').onclick = () => { idx = (idx + 1) % imgs.length; update(); };
+
+    update();
+  </script> -->
+
+</body>
+</html>
