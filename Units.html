@@ -3,45 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="wiki copy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="units.css">
     <title>UE GUARDIANS Units</title>
 
-    <style>
-      a:link{
-        color: white;
-        text-decoration: none;
-      }
-
-      
-    </style>
 </head>
 <body>
     <nav>
-    <div class="logo"><a href="TryWiki.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"> </a></div>
-    <div class="search">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search game content...">
-    </div>
-    <div class="buttons">
-      <a href="#Download"><button>Download</button></a>
-    </div>
+      <div class="logo"><a href="TryWiki.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"> </a></div>
+        <div class="search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search game content...">
+        </div>
+        <div class="buttons">
+          <a href="#Download"><button>Download</button></a>
+      </div>
   </nav>
 
-
   <main>
-    <h1 style="color: white;">Units</h1>
-    <br>
+    
+    
+    <section class="unit-container">
+      
+      <div class="unit">
+        <div>
+          <img src="https://files.catbox.moe/in29pq.webp" alt="ccss">
+          <h3>CCSS Student</h3>
+        </div>
+        <div class="description">
+          <div class="box">
+            <h4>CHARACTER DESCRIPTION:</h4>
+            <br>
+            <p>
+              Armed with code and courage, the CCSS unit stands as the last digital defense of the University of the East. Representing the fearless computer majors, they carry the pride of their department into battle, ready to outsmart and outlast the zombie apocalypse to protect their beloved alma mater!  
+            </p>
+          </div>
+        </div>
+      </div>
 
-    <h3>List of Units:</h3>
-    <legend>Dragon</legend>
-    <ul>
-      <a href="#CAS"><li>CAS</li></a>
-      <a href="#CCSS"><li>CAS</li></a>
-      <a href="#CBA"><li>CAS</li></a>
-      <a href="#CEng"><li>CAS</li></a>
-      <a href="#Cdent"><li>CAS</li></a>
+      
+      <div class="unit">
+        <div>
+          <img src="https://files.catbox.moe/22660o.webp" alt="cdent">
+          <h3>CDent Student</h3>
+        </div>
+        <div class="description">
+          <div class="box">
+            <h4>CHARACTER DESCRIPTION:</h4>
+            <br>
+            <p>
+              Armed with code and courage, the CCSS unit stands as the last digital defense of the University of the East. Representing the fearless computer majors, they carry the pride of their department into battle, ready to outsmart and outlast the zombie apocalypse to protect their beloved alma mater!  
+            </p>
+          </div>
+        </div>
+      </div>
 
-    </ul>
+      
+      <div class="unit">
+        <div>
+          <img src="https://files.catbox.moe/vtlqnb.webp" alt="cas">
+          <h3>CAS Student</h3>
+        </div>
+        <div class="description">
+          <div class="box">
+            <h4>CHARACTER DESCRIPTION:</h4>
+            <br>
+            <p>
+              Armed with code and courage, the CCSS unit stands as the last digital defense of the University of the East. Representing the fearless computer majors, they carry the pride of their department into battle, ready to outsmart and outlast the zombie apocalypse to protect their beloved alma mater!  
+            </p>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="unit">
+        <div>
+          <img src="https://files.catbox.moe/dse3ef.webp" alt="cba">
+          <h3>CBA Student</h3>
+        </div>
+        <div class="description">
+          <div class="box">
+            <h4>CHARACTER DESCRIPTION:</h4>
+            <br>
+            <p>
+              Armed with code and courage, the CCSS unit stands as the last digital defense of the University of the East. Representing the fearless computer majors, they carry the pride of their department into battle, ready to outsmart and outlast the zombie apocalypse to protect their beloved alma mater!  
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div class="unit">
+        <div>
+          <img src="https://files.catbox.moe/spxp3f.webp" alt="ceng">
+          <h3>CEng Student</h3>
+        </div>
+        <div class="description">
+          <div class="box">
+            <h4>CHARACTER DESCRIPTION:</h4>
+            <br>
+            <p>
+              Armed with code and courage, the CCSS unit stands as the last digital defense of the University of the East. Representing the fearless computer majors, they carry the pride of their department into battle, ready to outsmart and outlast the zombie apocalypse to protect their beloved alma mater!  
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+
+
+
+
+<script>
+  const slides = document.querySelector('.slides');
+  const units = document.querySelectorAll('.unit');
+  const prev = document.querySelector('.prev');
+  const next = document.querySelector('.next');
+
+  let currentIndex = 0;
+
+  function updateSlider() {
+    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  prev.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + units.length) % units.length;
+    updateSlider();
+  });
+
+  next.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % units.length;
+    updateSlider();
+  });
+
+</script>
+
+
+    
   </main>
+    
+ 
 </body>
 </html>
