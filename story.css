@@ -1,0 +1,248 @@
+:root {
+      --bg-dark: #121813;
+      --bg-darker: #1a1313;
+      --text-light: #FCFBF8;
+      --accent: #FA353B;
+      --accent-hover: rgba(250, 53, 59, 0.7);
+      --border: #000;
+      --nav-height: 84px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+      color: var(--text-light);
+      padding-top: 150px;
+      overflow-x: hidden;
+    }
+    /* Enhanced Navigation na to guys hehe */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Distributes space evenly */
+      height: var(--nav-height);
+      padding: 1rem 2rem;
+      background: linear-gradient(90deg, var(--bg-darker), rgba(0, 0, 0, 0.8)); /* Subtle gradient for depth */
+      border-bottom: 2px solid var(--accent);
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Soft shadow for elevation */
+      transition: background 0.3s ease;
+      
+    }
+   
+  
+    .logo img {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      padding: 3px;
+      background: var(--bg-dark);
+      transform: translateX(0); /* Reset initial transform */
+    }
+    
+    .logo img:hover {
+      transform: scale(1.1) rotate(5deg); /* Slight rotation for fun effect para masaya*/
+      box-shadow: 0 0 15px var(--accent-hover); /* Glowing effect para maangas */
+    }
+    
+    .search {
+      position: relative;
+      max-width: 400px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: 1rem; /* Space from buttons */
+    }
+    
+    .search input {
+      width: 100%;
+      padding: 0.75rem 1.5rem 0.75rem 2.5rem;
+      border: 1px solid var(--accent);
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    
+    .search input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-hover);
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+    }
+    
+    .search .fa-search {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 0.5rem; /* Even spacing between buttons */
+    }
+    
+    .buttons button {
+      margin-left: 0; /* Remove default margin */
+      padding: 0.6rem 1.5rem;
+      border-radius: 25px;
+      border: 2px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      text-transform: uppercase; /* Bold look para di awkward*/
+    }
+    
+    .buttons .primary {
+      background: var(--accent);
+      color: var(--text-light);
+      border: none;
+    }
+    
+    .buttons button:hover {
+      box-shadow: 0 0 10px var(--accent-hover);
+      transform: translateY(-2px); /* Slight lift effect para mas maangas ulit*/
+    }
+    
+    .buttons button:active {
+      transform: translateY(0);
+    }
+    
+    /* Enhanced Sub-Navigation */
+    .sub-nav {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      background: rgba(26, 19, 19, 0.95); /* Slightly transparent for elegance panis*/
+      border-bottom: 1px solid var(--accent);
+      z-index: 999;
+      padding: 0.5rem 0;
+      backdrop-filter: blur(5px); /* Glassmorphism effect daw tawag */
+    }
+    
+    .sub-nav .item {
+      position: relative;
+      padding: 0.8rem 1.8rem;
+      cursor: pointer;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .sub-nav .item:hover {
+      color: var(--accent);
+      transform: translateY(-2px); /* Lift effect on hover para maangas*/
+    }
+    
+    .sub-nav .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-dark);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      overflow: hidden;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .sub-nav .item:hover .dropdown {
+      display: block;
+    }
+    
+    .sub-nav .dropdown a {
+      display: block;
+      padding: 0.6rem 1.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    
+    .sub-nav .dropdown a:hover {
+      background: var(--accent-hover);
+      color: var(--text-light);
+    }
+    .story-wrapper {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--accent-hover);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(250, 53, 59, 0.2);
+  margin-top: 2rem;
+  backdrop-filter: blur(4px);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 5px rgba(250, 53, 59, 0.3);
+}
+
+.story-wrapper p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.gate-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.gate-list li {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.6rem 1rem;
+  border-left: 4px solid var(--accent);
+  margin-bottom: 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.highlighted {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.story-header {
+  margin-top: 2rem;
+}
+
+.story-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent-hover), 0 0 20px var(--accent-hover);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 10px var(--accent-hover); }
+  50% { text-shadow: 0 0 20px var(--accent); }
+}
