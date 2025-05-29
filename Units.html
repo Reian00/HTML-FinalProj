@@ -4,109 +4,247 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UE GUARDIANS Units</title>
-  <link rel="stylesheet" href="units.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="units.css">
 </head>
 <body>
   <nav>
     <div class="logo">
-      <a href="TryWiki.html">
-        <img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo">
-      </a>
+      <a href="UEGuardiansIndex.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"></a>
     </div>
     <div class="search">
       <i class="fas fa-search"></i>
       <input type="text" placeholder="Search game content...">
     </div>
     <div class="buttons">
-      <a href="#Download"><button>Download</button></a>
+      <button class="primary">Download</button>
     </div>
   </nav>
-
+  <div class="sub-nav">
+    <div class="item">Game
+      <div class="dropdown">
+        <a href="Units.html">Units</a>
+        <a href="enemies.html">Enemies</a>
+        <a href="story.html">Story</a>
+        <a href="stages.html">Stages</a>
+      </div>
+    </div>
+    <div class="item">
+        <a href="community.html"style="text-decoration: none; color: white;">Community</a>
+    </div>
+    <div class="item">About
+      <div class="dropdown">
+        <a href="team.html">Team</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
   <main>
-    <div class="slider-wrapper">
-      <button class="slider-nav-btn prev"><i class="fas fa-chevron-left"></i></button>
-      <div class="slider">
-        <div class="unit">
-          <img src="https://files.catbox.moe/in29pq.webp" alt="ccss">
-          <h3>CCSS Student</h3>
-          <div class="description">
-            <h4>CHARACTER DESCRIPTION:</h4>
-            <p>Armed with code and courage, the CCSS unit stands as the last digital defense of the University of the East. Representing the fearless computer majors, they carry the pride of their department into battle, ready to outsmart and outlast the zombie apocalypse to protect their beloved alma mater!</p>
+    <div class="unit-grid" id="unitGrid"></div>
+    <div id="unitModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()" aria-label="Close modal" role="button" tabindex="0">×</span>
+        <div class="unit-header">
+          <img id="modal-img" src="" alt="Unit Image">
+          <div class="unit-info">
+            <h2 id="modal-title"></h2>
+            <p id="modal-desc"></p>
+            <div class="badges" id="modal-badges"></div>
           </div>
         </div>
-        <div class="unit">
-          <img src="https://files.catbox.moe/22660o.webp" alt="cdent">
-          <h3>CDent Student</h3>
-          <div class="description">
-            <h4>CHARACTER DESCRIPTION:</h4>
-            <p>Armed with code and courage, the CDent unit takes on the battle with dental precision. They are ready to drill down on zombies and protect smiles across campus!</p>
-          </div>
+        <div class="unit-modal-section">
+          <h4>Unit Info</h4>
+          <div class="unit-info-grid" id="modal-info"></div>
         </div>
-        <div class="unit">
-          <img src="https://files.catbox.moe/vtlqnb.webp" alt="cas">
-          <h3>CAS Student</h3>
-          <div class="description">
-            <h4>CHARACTER DESCRIPTION:</h4>
-            <p>The CAS unit brings art and science together to craft clever defenses. From chemistry bombs to psychology traps, they’ll outthink any horde!</p>
-          </div>
+        <div class="unit-modal-section">
+          <h4>Cost Info</h4>
+          <div class="unit-info-grid" id="modal-costs"></div>
         </div>
-        <div class="unit">
-          <img src="https://files.catbox.moe/dse3ef.webp" alt="cba">
-          <h3>CBA Student</h3>
-          <div class="description">
-            <h4>CHARACTER DESCRIPTION:</h4>
-            <p>The CBA unit negotiates and trades with survivors, using business wit and economic tactics to secure resources and keep the campus running.</p>
-          </div>
-        </div>
-        <div class="unit">
-          <img src="https://files.catbox.moe/spxp3f.webp" alt="ceng">
-          <h3>CEng Student</h3>
-          <div class="description">
-            <h4>CHARACTER DESCRIPTION:</h4>
-            <p>Engineering genius meets brute force in the CEng unit. They build fortifications and gadgets to keep the zombie threat at bay.</p>
-          </div>
+        <div class="unit-modal-section">
+          <h4>Level Progression</h4>
+          <table class="unit-stats-table" id="modal-stats">
+            <thead>
+              <tr>
+                <th><i class="fas fa-level-up-alt"></i> Level</th>
+                <th><i class="fas fa-shield-alt"></i> Durability</th>
+                <th><i class="fas fa-bolt"></i> Attack</th>
+                <th><i class="fas fa-tachometer-alt"></i> Speed</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </div>
-      <button class="slider-nav-btn next"><i class="fas fa-chevron-right"></i></button>
-      <div class="slider-dots"></div>
     </div>
   </main>
-
   <script>
-    const slider = document.querySelector('.slider');
-    const units = Array.from(document.querySelectorAll('.unit'));
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
-    const dotsContainer = document.querySelector('.slider-dots');
-    let currentIndex = 0;
+    const modal = document.getElementById("unitModal");
 
-    units.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.classList.add('dot');
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => {
-        currentIndex = i;
-        updateSlider();
-      });
-      dotsContainer.appendChild(dot);
+    const unitData = {
+      ccss: {
+        img: "https://files.catbox.moe/in29pq.webp",
+        title: "CCSS Student",
+        desc: "Armed with code and courage, the CCSS unit stands as the last digital defense of the University of the East.",
+        info: {
+          Class: "Student",
+          Type: "Melee",
+          Faction: "Red Warrior",
+          Tier: "3",
+          Weapon: "USB Sword of Knowledge",
+          Ability: "Debug Shield",
+          Origin: "College of Computer Studies and Systems"
+        },
+        cost: 150,
+        upgradeCosts: [100, 150],
+        stats: [
+          { level: 1, durability: 100, attack: 20, speed: "Medium" },
+          { level: 2, durability: 130, attack: 25, speed: "Medium" },
+          { level: 3, durability: 160, attack: 30, speed: "Fast" }
+        ]
+      },
+      cdent: {
+        img: "https://files.catbox.moe/22660o.webp",
+        title: "CDent Student",
+        desc: "The CDent unit takes on the battle with dental precision, drilling down on zombies and protecting smiles across campus with surgical skill.",
+        info: {
+          Class: "Student",
+          Type: "Ranged",
+          Faction: "Red Warrior",
+          Tier: "3",
+          Weapon: "Tooth of Precision",
+          Ability: "Anesthetic Shot",
+          Origin: "College of Dentistry"
+        },
+        cost: 120,
+        upgradeCosts: [80, 120],
+        stats: [
+          { level: 1, durability: 80, attack: 25, speed: "Medium" },
+          { level: 2, durability: 100, attack: 30, speed: "Medium" },
+          { level: 3, durability: 120, attack: 35, speed: "Fast" }
+        ]
+      },
+      cas: {
+        img: "https://files.catbox.moe/vtlqnb.webp",
+        title: "CAS Student",
+        desc: "The CAS unit blends art and science to craft clever defenses, using chemistry bombs and psychology traps to outsmart any horde.",
+        info: {
+          Class: "Student",
+          Type: "Support",
+          Faction: "Red Warrior",
+          Tier: "3",
+          Weapon: "Book of Knowledge",
+          Ability: "Psychological Trap",
+          Origin: "College of Arts and Sciences"
+        },
+        cost: 100,
+        upgradeCosts: [70, 100],
+        stats: [
+          { level: 1, durability: 90, attack: 15, speed: "Fast" },
+          { level: 2, durability: 110, attack: 20, speed: "Fast" },
+          { level: 3, durability: 135, attack: 24, speed: "Fast" }
+        ]
+      },
+      cba: {
+        img: "https://files.catbox.moe/dse3ef.webp",
+        title: "CBA Student",
+        desc: "The CBA unit uses business wit and economic tactics to negotiate with survivors, securing resources to keep the campus thriving.",
+        info: {
+          Class: "Student",
+          Type: "Support",
+          Faction: "Red Warrior",
+          Tier: "3",
+          Weapon: "Ledger of Doom",
+          Ability: "Resource Negotiation",
+          Origin: "College of Business Administration"
+        },
+        cost: 110,
+        upgradeCosts: [75, 110],
+        stats: [
+          { level: 1, durability: 85, attack: 14, speed: "Medium" },
+          { level: 2, durability: 105, attack: 19, speed: "Medium" },
+          { level: 3, durability: 125, attack: 23, speed: "Medium" }
+        ]
+      },
+      ceng: {
+        img: "https://files.catbox.moe/spxp3f.webp",
+        title: "CEng Student",
+        desc: "The CEng unit combines engineering genius with brute force, building fortifications and gadgets to hold back the zombie threat.",
+        info: {
+          Class: "Student",
+          Type: "Melee",
+          Faction: "Red Warrior",
+          Tier: "3",
+          Weapon: "Wrench of Fortification",
+          Ability: "Gadget Deployment",
+          Origin: "College of Engineering"
+        },
+        cost: 140,
+        upgradeCosts: [90, 130],
+        stats: [
+          { level: 1, durability: 105, attack: 17, speed: "Slow" },
+          { level: 2, durability: 130, attack: 21, speed: "Medium" },
+          { level: 3, durability: 155, attack: 25, speed: "Medium" }
+        ]
+      }
+    };
+
+    const unitGrid = document.getElementById("unitGrid");
+    Object.entries(unitData).forEach(([key, unit]) => {
+      const card = document.createElement("div");
+      card.className = "unit-card";
+      card.onclick = () => openModal(key);
+      card.innerHTML = `
+        <img src="${unit.img}" alt="${unit.title}">
+        <h3>${unit.title}</h3>
+        <p class="short-desc">${unit.desc.split('.')[0]}.</p>
+      `;
+      unitGrid.appendChild(card);
     });
 
-    function updateSlider() {
-      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-      document.querySelectorAll('.dot').forEach((d,i) => {
-        d.classList.toggle('active', i===currentIndex);
-      });
+    function openModal(unitId) {
+      const data = unitData[unitId];
+      document.getElementById("modal-img").src = data.img;
+      document.getElementById("modal-img").alt = data.title;
+      document.getElementById("modal-title").textContent = data.title;
+      document.getElementById("modal-desc").textContent = data.desc;
+
+      const badges = [
+        `<span class="class-badge"><i class="fas fa-shield-alt"></i> ${data.info.Class}</span>`,
+        `<span class="type-badge"><i class="fas fa-gavel"></i> ${data.info.Type}</span>`,
+        `<span class="faction-badge"><i class="fas fa-flag"></i> ${data.info.Faction}</span>`,
+        `<span class="tier-badge"><i class="fas fa-star"></i> Tier ${data.info.Tier}</span>`
+      ];
+      document.getElementById("modal-badges").innerHTML = badges.join(' ');
+
+      const excluded = ['Class', 'Type', 'Faction', 'Tier'];
+      const infoHtml = Object.entries(data.info)
+        .filter(([label]) => !excluded.includes(label))
+        .map(([label, value]) => `<div><strong>${label}:</strong> ${value}</div>`)
+        .join('');
+      document.getElementById("modal-info").innerHTML = infoHtml;
+
+      const costHtml = `
+        <div><strong>Initial Cost:</strong> ${data.cost} Gold</div>
+        <div><strong>Level 1 to 2:</strong> ${data.upgradeCosts[0]} Gold</div>
+        <div><strong>Level 2 to 3:</strong> ${data.upgradeCosts[1]} Gold</div>
+      `;
+      document.getElementById("modal-costs").innerHTML = costHtml;
+
+      const statsHtml = data.stats
+        .map(row => `<tr><td>${row.level}</td><td>${row.durability}</td><td>${row.attack}</td><td>${row.speed}</td></tr>`)
+        .join('');
+      document.getElementById("modal-stats").querySelector("tbody").innerHTML = statsHtml;
+
+      modal.style.display = "flex";
     }
 
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + units.length) % units.length;
-      updateSlider();
-    });
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % units.length;
-      updateSlider();
-    });
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target === modal) closeModal();
+    }
   </script>
 </body>
 </html>
