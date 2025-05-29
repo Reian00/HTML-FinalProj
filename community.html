@@ -1,22 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="community.css">
-    <title>UE GUARDIANS Units</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="community.css">
+  <title>UE GUARDIANS Community</title>
+  
+    
 </head>
 <body>
-    <nav>
-    <div class="logo"><a href="TryWiki.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"> </a></div>
+  <nav>
+    <div class="logo">
+      <a href="UEGuardiansIndex.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"> </a>
+    </div>
     <div class="search">
       <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search game content...">
+      <input type="text" id="searchInput" placeholder="Search game content...">
     </div>
     <div class="buttons">
-      <a href="#Download"><button>Download</button></a>
+      <button class="primary">Download</button>
     </div>
   </nav>
+
+  <div class="sub-nav">
+    <div class="item">Game
+      <div class="dropdown">
+        <a href="Units.html">Units</a>
+        <a href="enemies.html">Enemies</a>
+        <a href="story.html">Story</a>
+        <a href="stages.html">Stages</a>
+      </div>
+    </div>
+    <div class="item">Community</div>
+    <div class="item">About
+      <div class="dropdown">
+        <a href="team.html">Team</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <h1>Join Our Community</h1>
+    
+    <div class="community-section">
+      <div class="welcome-message">
+        <p>Welcome to the UE Guardians community hub! This is your central place to connect with fellow players, share strategies, get assistance, and stay updated on all things UE Guardians. Whether you're looking for gold management advice, unit tile placement, theorycrafting meta student squad compositions, want to report a bug, or just chat with other fans of the game, you've come to the right place!</p>
+        <p>Our community is built on respect, collaboration, and a shared love for the game. Join the conversation and help make UE Guardians even better!</p>
+        <a href="#" class="cta-button">Join Discord</a>
+      </div>
+      
+      <div class="community-features">
+        <div class="feature-card">
+          <i class="fas fa-users"></i>
+          <h3>Player Discussions</h3>
+          <p>Share strategies, ask questions, and connect with thousands of other UE Guardians players.</p>
+        </div>
+        
+        <div class="feature-card">
+          <i class="fas fa-trophy"></i>
+          <h3>Leaderboards</h3>
+          <p>Check the players who survived the most rounds and see who are the top performers.</p>
+        </div>
+        
+        <div class="feature-card">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Suggestions</h3>
+          <p>Have ideas to improve the game? Share your suggestions and vote on others' ideas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-form">
+      <h3>Share Your Strategy</h3>
+      <input type="text" id="postTitle" placeholder="Post Title" required>
+      <input type="text" id="postAuthor" placeholder="Your Name" required>
+      <select id="postCategory" required>
+        <option value="" disabled selected>Select Category</option>
+        <option value="Strategy">Strategy</option>
+        <option value="Help">Help</option>
+        <option value="General">General</option>
+      </select>
+      <textarea id="postContent" placeholder="Share your tips, strategies, or questions..." required></textarea>
+      <button onclick="submitPost()">Submit Post</button>
+    </div>
+    
+    <div class="filter-section">
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="Strategy">Strategy</option>
+        <option value="Help">Help</option>
+        <option value="General">General</option>
+      </select>
+    </div>
+    
+    <div class="post-grid" id="postGrid"></div>
+    
+    <div id="postModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()" aria-label="Close modal" role="button" tabindex="0">×</span>
+        <div class="post-header">
+          <h2 id="modal-title"></h2>
+          <p class="author" id="modal-author"></p>
+          <p class="timestamp" id="modal-timestamp"></p>
+          <span class="category-badge" id="modal-category"></span>
+        </div>
+        <div class="post-content" id="modal-content"></div>
+        <div class="vote-section">
+          <button class="vote-button" id="modal-upvote"><i class="fas fa-arrow-up"></i> Upvote</button>
+          <span class="vote-score" id="modal-score"></span>
+          <button class="vote-button" id="modal-downvote"><i class="fas fa-arrow-down"></i> Downvote</button>
+        </div>
+        <div class="reply-form">
+          <h4>Add a Reply</h4>
+          <input type="text" id="replyAuthor" placeholder="Your Name" required>
+          <textarea id="replyContent" placeholder="Your reply..." required></textarea>
+          <button onclick="submitReply()">Submit Reply</button>
+        </div>
+        <div class="replies-section" id="repliesSection">
+          <h4>Replies</h4>
+          <div id="repliesList"></div>
+        </div>
+        <button class="delete-button" id="modal-delete" onclick="deletePost()">Delete Post</button>
+      </div>
+    </div>
+  </main>
+  
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-discord"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Support</a>
+      <a href="#">Careers</a>
+    </div>
+    
+    <div class="copyright">
+      © 2025 UE Guardians. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const modal = document.getElementById("postModal");
+    const postGrid = document.getElementById("postGrid");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    let currentPostId = null;
+
+    // Initialize posts from localStorage or use sample posts
+    let posts = JSON.parse(localStorage.getItem("ueGuardiansPosts")) || [
+      {
+        id: "1",
+        title: "Best CDent Build for Wave 10",
+        author: "RedWarrior123",
+        category: "Strategy",
+        content: "I've been experimenting with the CDent unit's Tooth of Precision. Pairing it with CAS's Psychological Trap really slows down those Student Zombies. Anyone else tried this combo? Suggestions for gold management?",
+        timestamp: "2025-05-28T10:00:00Z",
+        upvotes: 5,
+        downvotes: 1,
+        replies: [
+          { id: "r1", author: "TacticMaster", content: "Great combo! Try adding a CEng unit for extra fortification.", timestamp: "2025-05-28T11:00:00Z" }
+        ]
+      },
+      {
+        id: "2",
+        title: "How to Counter Security Zombie",
+        author: "UEGuardianFan",
+        category: "Help",
+        content: "The Security Zombie's heavy armor is tough! I found that stacking CCSS units with Debug Shield and focusing fire works well. What other units do you use to take it down?",
+        timestamp: "2025-05-27T15:30:00Z",
+        upvotes: 3,
+        downvotes: 0,
+        replies: [
+          { id: "r2", author: "ZombieSlayer", content: "I use CDent's Anesthetic Shot to slow it down first.", timestamp: "2025-05-27T16:00:00Z" }
+        ]
+      },
+      {
+        id: "3",
+        title: "Tips for Early Game Gold",
+        author: "CampusDefender",
+        category: "General",
+        content: "Struggling with gold in early waves? Use CBA's Resource Negotiation to boost your economy. Place them near the entrance and upgrade to level 2 ASAP. Any other early game tips?",
+        timestamp: "2025-05-26T08:45:00Z",
+        upvotes: 7,
+        downvotes: 2,
+        replies: []
+      }
+    ];
+
+    // Save posts to localStorage
+    function savePosts() {
+      localStorage.setItem("ueGuardiansPosts", JSON.stringify(posts));
+    }
+
+    // Render posts to the grid
+    function renderPosts(filter = "", category = "") {
+      postGrid.innerHTML = "";
+      const filteredPosts = posts.filter(post =>
+        (post.title.toLowerCase().includes(filter.toLowerCase()) ||
+         post.author.toLowerCase().includes(filter.toLowerCase())) &&
+        (category === "" || post.category === category)
+      );
+      filteredPosts.forEach(post => {
+        const card = document.createElement("div");
+        card.className = "post-card";
+        card.onclick = () => openModal(post.id);
+        const shortContent = post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content;
+        const score = post.upvotes - post.downvotes;
+        card.innerHTML = `
+          <span class="category-badge">${post.category}</span>
+          <h3>${post.title}</h3>
+          <p class="author">By ${post.author}</p>
+          <p>${shortContent}</p>
+          <p class="timestamp">${new Date(post.timestamp).toLocaleString()}</p>
+          <div class="vote-section">
+            <button class="vote-button" onclick="votePost('${post.id}', 'upvote'); event.stopPropagation();"><i class="fas fa-arrow-up"></i> ${post.upvotes}</button>
+            <span class="vote-score">Score: ${score}</span>
+            <button class="vote-button" onclick="votePost('${post.id}', 'downvote'); event.stopPropagation();"><i class="fas fa-arrow-down"></i> ${post.downvotes}</button>
+          </div>
+        `;
+        postGrid.appendChild(card);
+      });
+    }
+
+    // Open modal with post details
+    function openModal(postId) {
+      const post = posts.find(p => p.id === postId);
+      currentPostId = postId;
+      document.getElementById("modal-title").textContent = post.title;
+      document.getElementById("modal-author").textContent = `By ${post.author}`;
+      document.getElementById("modal-timestamp").textContent = new Date(post.timestamp).toLocaleString();
+      document.getElementById("modal-category").textContent = post.category;
+      document.getElementById("modal-content").textContent = post.content;
+      const score = post.upvotes - post.downvotes;
+      document.getElementById("modal-score").textContent = `Score: ${score}`;
+      document.getElementById("modal-upvote").onclick = () => votePost(postId, 'upvote');
+      document.getElementById("modal-downvote").onclick = () => votePost(postId, 'downvote');
+
+      const repliesList = document.getElementById("repliesList");
+      repliesList.innerHTML = post.replies.map(reply => `
+        <div class="reply">
+          <p class="author">By ${reply.author}</p>
+          <p class="timestamp">${new Date(reply.timestamp).toLocaleString()}</p>
+          <p class="content">${reply.content}</p>
+          <button class="delete-reply" onclick="deleteReply('${postId}', '${reply.id}'); event.stopPropagation();">Delete Reply</button>
+        </div>
+      `).join('');
+      modal.style.display = "flex";
+    }
+
+    // Vote on a post
+    function votePost(postId, type) {
+      const post = posts.find(p => p.id === postId);
+      if (type === 'upvote') {
+        post.upvotes += 1;
+      } else if (type === 'downvote') {
+        post.downvotes += 1;
+      }
+      savePosts();
+      renderPosts(searchInput.value, categoryFilter.value);
+      if (currentPostId === postId) {
+        const score = post.upvotes - post.downvotes;
+        document.getElementById("modal-score").textContent = `Score: ${score}`;
+      }
+    }
+
+    // Submit new post
+    function submitPost() {
+      const title = document.getElementById("postTitle").value.trim();
+      const author = document.getElementById("postAuthor").value.trim();
+      const category = document.getElementById("postCategory").value;
+      const content = document.getElementById("postContent").value.trim();
+      if (title && author && category && content) {
+        const newPost = {
+          id: Date.now().toString(),
+          title,
+          author,
+          category,
+          content,
+          timestamp: new Date().toISOString(),
+          upvotes: 0,
+          downvotes: 0,
+          replies: []
+        };
+        posts.unshift(newPost);
+        savePosts();
+        renderPosts(searchInput.value, categoryFilter.value);
+        document.getElementById("postTitle").value = "";
+        document.getElementById("postAuthor").value = "";
+        document.getElementById("postCategory").value = "";
+        document.getElementById("postContent").value = "";
+      } else {
+        alert("Please fill in all fields!");
+      }
+    }
+
+    // Submit new reply
+    function submitReply() {
+      const author = document.getElementById("replyAuthor").value.trim();
+      const content = document.getElementById("replyContent").value.trim();
+      if (author && content && currentPostId) {
+        const post = posts.find(p => p.id === currentPostId);
+        const newReply = {
+          id: Date.now().toString(),
+          author,
+          content,
+          timestamp: new Date().toISOString()
+        };
+        post.replies.push(newReply);
+        savePosts();
+        openModal(currentPostId); // Refresh modal to show new reply
+        document.getElementById("replyAuthor").value = "";
+        document.getElementById("replyContent").value = "";
+      } else {
+        alert("Please fill in all reply fields!");
+      }
+    }
+
+    // Delete post
+    function deletePost() {
+      if (confirm("Are you sure you want to delete this post?")) {
+        posts = posts.filter(post => post.id !== currentPostId);
+        savePosts();
+        renderPosts(searchInput.value, categoryFilter.value);
+        closeModal();
+      }
+    }
+
+    // Delete reply
+    function deleteReply(postId, replyId) {
+      if (confirm("Are you sure you want to delete this reply?")) {
+        const post = posts.find(p => p.id === postId);
+        post.replies = post.replies.filter(reply => reply.id !== replyId);
+        savePosts();
+        openModal(postId); // Refresh modal to update replies
+      }
+    }
+
+    // Close modal
+    function closeModal() {
+      modal.style.display = "none";
+      currentPostId = null;
+    }
+
+    // Search and category filter
+    searchInput.addEventListener("input", () => {
+      renderPosts(searchInput.value, categoryFilter.value);
+    });
+    categoryFilter.addEventListener("change", () => {
+      renderPosts(searchInput.value, categoryFilter.value);
+    });
+
+    // Close modal on outside click
+    window.onclick = function(event) {
+      if (event.target === modal) closeModal();
+    };
+
+    // Initial render
+    renderPosts();
+  </script>
 </body>
 </html>
