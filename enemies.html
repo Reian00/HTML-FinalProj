@@ -1,45 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="enemies.css">
-    <title>UE GUARDIANS Units</title>
-
-    <style>
-      a:link{
-        color: white;
-        text-decoration: none;
-      }
-
-      
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UE GUARDIANS Enemies</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="enemies.css">
+  
 </head>
-
-
 <body>
-    <nav>
-    <div class="logo"><a href="TryWiki.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"> </a></div>
+  <nav>
+    <div class="logo">
+      <a href="UEGuardiansIndex.html"><img src="https://i.imgur.com/mHVgkNo.jpeg" alt="Logo"></a>
+    </div>
     <div class="search">
       <i class="fas fa-search"></i>
       <input type="text" placeholder="Search game content...">
     </div>
     <div class="buttons">
-      <a href="#Download"><button>Download</button></a>
+      <button class="primary">Download</button>
     </div>
   </nav>
-
-
+  <div class="sub-nav">
+    <div class="item">Game
+      <div class="dropdown">
+        <a href="Units.html">Units</a>
+        <a href="enemies.html">Enemies</a>
+        <a href="story.html">Story</a>
+        <a href="stages.html">Stages</a>
+      </div>
+    </div>
+    <div class="item">
+        <a href="community.html"style="text-decoration: none; color: white;">Community</a>
+    </div>
+    <div class="item">About
+      <div class="dropdown">
+        <a href="team.html">Team</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
   <main>
-    <h3>List of Units:</h3>
-    <legend>Dragon</legend>
-    <ul>
-      <a href="#CAS"><li>CAS</li></a>
-      <a href="#CCSS"><li>CAS</li></a>
-      <a href="#CBA"><li>CAS</li></a>
-      <a href="#CEng"><li>CAS</li></a>
-      <a href="#Cdent"><li>CAS</li></a>
+    <div class="enemy-grid" id="enemyGrid"></div>
+    <div id="enemyModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()" aria-label="Close modal" role="button" tabindex="0">×</span>
+        <div class="enemy-header">
+          <img id="modal-img" src="" alt="Enemy Image">
+          <div class="enemy-info">
+            <h2 id="modal-title"></h2>
+            <p id="modal-desc"></p>
+            <div class="badges" id="modal-badges"></div>
+          </div>
+        </div>
+        <div class="enemy-modal-section">
+          <h4>Enemy Info</h4>
+          <div class="enemy-info-grid" id="modal-info"></div>
+        </div>
+        <div class="enemy-modal-section">
+          <h4>Enemy Stats</h4>
+          <table class="enemy-stats-table" id="modal-stats">
+            <thead>
+              <tr>
+                <th><i class="fas fa-shield-alt"></i> Durability</th>
+                <th><i class="fas fa-bolt"></i> Attack</th>
+                <th><i class="fas fa-tachometer-alt"></i> Speed</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="enemy-modal-section">
+          <h4>Weakness</h4>
+          <div class="enemy-info-grid" id="modal-weakness"></div>
+        </div>
+      </div>
+    </div>
   </main>
+  <script>
+    const modal = document.getElementById("enemyModal");
+
+    const enemyData = {
+      avilesZombie: {
+        img: "https://files.catbox.moe/5phgnx.webp",
+        title: "Aviles Zombie",
+        desc: "Once a biology student filled with warrior faith, the Aviles Zombie now shambles relentlessly, its soul corrupted by darkness. It seeks to devour the spirit of the University of the East with its toxic bite, spreading infection to weaken the Red Warriors' resolve.",
+        info: {
+          Type: "Infected",
+          Speed: "Slow",
+          Strength: "Moderate",
+          "Special Ability": "Toxic Bite",
+          Weakness: "Headshots (high-damage ranged attacks)"
+        },
+        stats: {
+          durability: 120,
+          attack: 15,
+          speed: "Slow"
+        }
+      },
+      securityZombie: {
+        img: "https://files.catbox.moe/chvfum.webp",
+        title: "Security Zombie",
+        desc: "A former campus guard who lost their warrior faith to the zombie plague, the Security Zombie now wields its baton to wreak havoc on the University of the East. Its heavy armor makes it a formidable foe, driven to crush the students' spirit.",
+        info: {
+          Type: "Armored",
+          Speed: "Slow",
+          Strength: "High",
+          "Special Ability": "Heavy Armor",
+          Weakness: "Focused Fire (sustained high-damage attacks)"
+        },
+        stats: {
+          durability: 200,
+          attack: 20,
+          speed: "Slow"
+        }
+      },
+      studentZombie: {
+        img: "https://files.catbox.moe/agrzr3.webp",
+        title: "Student Zombie",
+        desc: "Once a vibrant student of the University of the East, this zombie has forsaken its warrior faith and now uses its agility to slip through defenses. Driven to consume the faith of the Red Warriors, it moves swiftly to disrupt the campus.",
+        info: {
+          Type: "Agile",
+          Speed: "Fast",
+          Strength: "Low",
+          "Special Ability": "Slip Through Gaps",
+          Weakness: "Flashbangs (area-of-effect crowd control)"
+        },
+        stats: {
+          durability: 80,
+          attack: 10,
+          speed: "Fast"
+        }
+      }
+    };
+
+    const enemyGrid = document.getElementById("enemyGrid");
+    Object.entries(enemyData).forEach(([key, enemy]) => {
+      const card = document.createElement("div");
+      card.className = "enemy-card";
+      card.onclick = () => openModal(key);
+      card.innerHTML = `
+        <img src="${enemy.img}" alt="${enemy.title}">
+        <h3>${enemy.title}</h3>
+        <p class="short-desc">${enemy.desc.split('.')[0]}.</p>
+      `;
+      enemyGrid.appendChild(card);
+    });
+
+    function openModal(enemyId) {
+      const data = enemyData[enemyId];
+      document.getElementById("modal-img").src = data.img;
+      document.getElementById("modal-img").alt = data.title;
+      document.getElementById("modal-title").textContent = data.title;
+      document.getElementById("modal-desc").textContent = data.desc;
+
+      const badges = [
+        `<span class="type-badge"><i class="fas fa-skull"></i> ${data.info.Type}</span>`,
+        `<span class="speed-badge"><i class="fas fa-tachometer-alt"></i> ${data.info.Speed}</span>`,
+        `<span class="strength-badge"><i class="fas fa-fist-raised"></i> ${data.info.Strength}</span>`
+      ];
+      document.getElementById("modal-badges").innerHTML = badges.join(' ');
+
+      const infoHtml = Object.entries(data.info)
+        .filter(([label]) => label !== "Weakness")
+        .map(([label, value]) => `<div><strong>${label}:</strong> ${value}</div>`)
+        .join('');
+      document.getElementById("modal-info").innerHTML = infoHtml;
+
+      const statsHtml = `
+        <tr>
+          <td>${data.stats.durability}</td>
+          <td>${data.stats.attack}</td>
+          <td>${data.stats.speed}</td>
+        </tr>
+      `;
+      document.getElementById("modal-stats").querySelector("tbody").innerHTML = statsHtml;
+
+      const weaknessHtml = `<div><strong>Weakness:</strong> ${data.info.Weakness}</div>`;
+      document.getElementById("modal-weakness").innerHTML = weaknessHtml;
+
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target === modal) closeModal();
+    }
+  </script>
 </body>
 </html>
